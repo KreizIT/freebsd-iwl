@@ -2112,7 +2112,7 @@ iwl_rx_compressed_ba(struct iwl_softc *sc, struct iwl_rx_desc *desc,
 
 	txq = &sc->txq[le16toh(ba->qid)];
 	tap = sc->qid2tap[le16toh(ba->qid)];
-	tid = WME_AC_TO_TID(tap->txa_ac);
+	tid = tap->txa_tid;
 	ni = tap->txa_ni;
 	wn = (void *)ni;
 
@@ -2506,7 +2506,7 @@ iwl_ampdu_tx_done(struct iwl_softc *sc, int qid, int idx, int nframes,
 		bitmap |= 1ULL << bit;
 	}
 	tap = sc->qid2tap[qid];
-	tid = WME_AC_TO_TID(tap->txa_ac);
+	tid = tap->txa_tid;
 	wn = (void *)tap->txa_ni;
 	wn->agg[tid].bitmap = bitmap;
 	wn->agg[tid].startidx = start;
@@ -4561,7 +4561,7 @@ iwl_addba_response(struct ieee80211_node *ni, struct ieee80211_tx_ampdu *tap,
 {
 	struct iwl_softc *sc = ni->ni_ic->ic_ifp->if_softc;
 	int qid = *(int *)tap->txa_private;
-	uint8_t tid = WME_AC_TO_TID(tap->txa_ac);
+	uint8_t tid = tap->txa_tid;
 	int ret;
 
 	if (code == IEEE80211_STATUS_SUCCESS) {
@@ -4618,7 +4618,7 @@ iwl_ampdu_tx_stop(struct ieee80211_node *ni, struct ieee80211_tx_ampdu *tap)
 {
 	struct iwl_softc *sc = ni->ni_ic->ic_ifp->if_softc;
 	struct iwl_ops *ops = &sc->ops;
-	uint8_t tid = WME_AC_TO_TID(tap->txa_ac);
+	uint8_t tid = tap->txa_tid;
 	int qid;
 
 	if (tap->txa_private == NULL)
