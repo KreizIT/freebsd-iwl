@@ -15,3 +15,12 @@ sys/modules/iwl/machine
 sys/modules/iwl/pci_if.h
 sys/modules/iwl/x86
 
+sys/modules/iwlfw/iwl100/@
+sys/modules/iwlfw/iwl100/export_syms
+sys/modules/iwlfw/iwl100/iwl100fw.c
+sys/modules/iwlfw/iwl100/iwl100fw.ko
+sys/modules/iwlfw/iwl100/iwl100fw.o
+sys/modules/iwlfw/iwl100/iwlwifi-100-39.31.5.1.fw
+sys/modules/iwlfw/iwl100/iwlwifi-100-39.31.5.1.fw.fwo
+sys/modules/iwlfw/iwl100/machine
+sys/modules/iwlfw/iwl100/x86
