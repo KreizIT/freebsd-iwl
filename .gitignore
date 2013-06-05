@@ -1,4 +1,17 @@
 *.vo
 *.glob
 *.v.d
+sys/modules/iwl/@
+sys/modules/iwl/bus_if.h
+sys/modules/iwl/device_if.h
+sys/modules/iwl/export_syms
+sys/modules/iwl/iwl.ko
+sys/modules/iwl/iwl_core.o
+sys/modules/iwl/iwl_led.o
+sys/modules/iwl/iwl_pci.o
+sys/modules/iwl/iwl_scan.o
+sys/modules/iwl/iwl_tx.o
+sys/modules/iwl/machine
+sys/modules/iwl/pci_if.h
+sys/modules/iwl/x86
 
