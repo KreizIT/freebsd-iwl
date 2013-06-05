@@ -5,7 +5,7 @@ sys/modules/iwl/@
 sys/modules/iwl/bus_if.h
 sys/modules/iwl/device_if.h
 sys/modules/iwl/export_syms
-sys/modules/iwl/iwl.ko
+sys/modules/iwl/if_iwl.ko
 sys/modules/iwl/iwl_core.o
 sys/modules/iwl/iwl_led.o
 sys/modules/iwl/iwl_pci.o
@@ -24,3 +24,14 @@ sys/modules/iwlfw/iwl100/iwlwifi-100-39.31.5.1.fw
 sys/modules/iwlfw/iwl100/iwlwifi-100-39.31.5.1.fw.fwo
 sys/modules/iwlfw/iwl100/machine
 sys/modules/iwlfw/iwl100/x86
+
+sys/modules/iwlfw/iwl6000/@
+sys/modules/iwlfw/iwl6000/machine
+sys/modules/iwlfw/iwl6000/x86
+sys/modules/iwlfw/iwl6000g2a/@
+sys/modules/iwlfw/iwl6000g2a/machine
+sys/modules/iwlfw/iwl6000g2a/x86
+sys/modules/iwlfw/iwl6000g2b/@
+sys/modules/iwlfw/iwl6000g2b/machine
+sys/modules/iwlfw/iwl6000g2b/x86
+
