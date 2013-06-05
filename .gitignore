@@ -25,13 +25,33 @@ sys/modules/iwlfw/iwl100/iwlwifi-100-39.31.5.1.fw.fwo
 sys/modules/iwlfw/iwl100/machine
 sys/modules/iwlfw/iwl100/x86
 
-sys/modules/iwlfw/iwl6000/@
-sys/modules/iwlfw/iwl6000/machine
-sys/modules/iwlfw/iwl6000/x86
 sys/modules/iwlfw/iwl6000g2a/@
 sys/modules/iwlfw/iwl6000g2a/machine
 sys/modules/iwlfw/iwl6000g2a/x86
+sys/modules/iwlfw/iwl6000g2a/export_syms
+sys/modules/iwlfw/iwl6000g2a/iwl6000g2afw.c
+sys/modules/iwlfw/iwl6000g2a/iwl6000g2afw.ko
+sys/modules/iwlfw/iwl6000g2a/iwl6000g2afw.o
+sys/modules/iwlfw/iwl6000g2a/iwlwifi-6000g2a-6.ucode.fw
+sys/modules/iwlfw/iwl6000g2a/iwlwifi-6000g2a-6.ucode.fw.fwo
+
+sys/modules/iwlfw/iwl6000/@
+sys/modules/iwlfw/iwl6000/machine
+sys/modules/iwlfw/iwl6000/x86
+sys/modules/iwlfw/iwl6000/export_syms
+sys/modules/iwlfw/iwl6000/iwl6000fw.c
+sys/modules/iwlfw/iwl6000/iwl6000fw.ko
+sys/modules/iwlfw/iwl6000/iwl6000fw.o
+sys/modules/iwlfw/iwl6000/iwlwifi-6000-9.221.4.1.fw
+sys/modules/iwlfw/iwl6000/iwlwifi-6000-9.221.4.1.fw.fwo
+
 sys/modules/iwlfw/iwl6000g2b/@
 sys/modules/iwlfw/iwl6000g2b/machine
 sys/modules/iwlfw/iwl6000g2b/x86
+sys/modules/iwlfw/iwl6000g2b/export_syms
+sys/modules/iwlfw/iwl6000g2b/iwl6000g2bfw.c
+sys/modules/iwlfw/iwl6000g2b/iwl6000g2bfw.ko
+sys/modules/iwlfw/iwl6000g2b/iwl6000g2bfw.o
+sys/modules/iwlfw/iwl6000g2b/iwlwifi-6000g2b-18.168.6.1.fw
+sys/modules/iwlfw/iwl6000g2b/iwlwifi-6000g2b-18.168.6.1.fw.fwo
 
