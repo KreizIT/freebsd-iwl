@@ -66,16 +66,17 @@ static int
 iwl_pci_attach(device_t dev)
 {
 
-	uint32_t error;
-	uint32_t result;
+	struct iwl_softc *sc = (struct iwl_softc *)device_get_softc(dev);
 	uint32_t reg;
-	struct iwl_softc *sc = device_get_softc(dev);
+	int error, result;
+
+	sc->sc_dev = dev;
 
 	/*
 	 * Get the offset of the PCI Express Capability	Structure in PCI
 	 * Configuration Space.
 	 */
-	error = pci_find_extcap(dev, PCIY_EXPRESS, &sc->sc_cap_off);
+	error = pci_find_cap(dev, PCIY_EXPRESS, &sc->sc_cap_off);
 	if (error != 0) {
 		device_printf(dev, "PCIe capability structure not found!\n");
 		return error;
