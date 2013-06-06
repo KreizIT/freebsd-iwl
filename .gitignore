@@ -55,3 +55,13 @@ sys/modules/iwlfw/iwl6000g2b/iwl6000g2bfw.o
 sys/modules/iwlfw/iwl6000g2b/iwlwifi-6000g2b-18.168.6.1.fw
 sys/modules/iwlfw/iwl6000g2b/iwlwifi-6000g2b-18.168.6.1.fw.fwo
 
+sys/modules/iwlfw/iwl2000/@
+sys/modules/iwlfw/iwl2000/export_syms
+sys/modules/iwlfw/iwl2000/iwl2000fw.c
+sys/modules/iwlfw/iwl2000/iwl2000fw.ko
+sys/modules/iwlfw/iwl2000/iwl2000fw.o
+sys/modules/iwlfw/iwl2000/iwlwifi-2000-18.168.6.1.fw
+sys/modules/iwlfw/iwl2000/iwlwifi-2000-18.168.6.1.fw.fwo
+sys/modules/iwlfw/iwl2000/machine
+sys/modules/iwlfw/iwl2000/x86
+
