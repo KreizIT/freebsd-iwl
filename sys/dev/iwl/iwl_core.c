@@ -237,7 +237,7 @@ iwl_attach(device_t dev)
 	IWL_LOCK_INIT(sc);
 
 	/* Read hardware revision and attach. */
-	sc->hw_type = (IWL_READ(sc, IWL_HW_REV) >> 4) & 0xf;
+	sc->hw_type = (IWL_READ(sc, IWL_HW_REV) >> 4) & 0xff;
 	error = iwl5000_attach(sc, pci_get_device(dev));
 	if (error != 0) {
 		device_printf(dev, "could not attach device, error %d\n",
@@ -504,6 +504,10 @@ iwl5000_attach(struct iwl_softc *sc, uint16_t pid)
 			sc->txchainmask = IWL_ANT_BC;
 			sc->rxchainmask = IWL_ANT_BC;
 		}
+		break;
+	case IWL_HW_REV_TYPE_2000:
+		sc->limits = &iwl1000_sensitivity_limits;
+		sc->fwname = "iwl2000fw";
 		break;
 	default:
 		device_printf(sc->sc_dev, "adapter type %d not supported\n",
