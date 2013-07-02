@@ -192,6 +192,7 @@ iwl_intr_str(uint8_t cmd)
 	case IWL_RX_PHY:		return "RX_PHY";
 	case IWL_MPDU_RX_DONE:		return "MPDU_RX_DONE";
 	case IWL_RX_DONE:		return "RX_DONE";
+	case IWL_TEMP_NOTIFICATION: return "IWL_TEMP_NOTIFICATION";
 
 	/* Command Notifications */
 	case IWL_CMD_RXON:		return "IWL_CMD_RXON";
