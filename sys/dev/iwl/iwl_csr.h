@@ -159,6 +159,7 @@
 #define IWL_HW_REV_TYPE_6000		7
 #define IWL_HW_REV_TYPE_6050		8
 #define IWL_HW_REV_TYPE_6005		11
+#define IWL_HW_REV_TYPE_2030		12
 #define IWL_HW_REV_TYPE_2000		16
 
 /* Possible flags for register IWL_GIO_CHICKEN. */

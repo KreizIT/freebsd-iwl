@@ -1274,6 +1274,18 @@ static const struct iwl_sensitivity_limits iwl6000_sensitivity_limits = {
 	 97,
 	100
 };
+/* Get value from linux kernel 3.2.+ */
+static const struct iwl_sensitivity_limits iwl2230_sensitivity_limits = {
+    105,110,
+    128,232,
+	80,145,
+	128,232,
+	125,175,
+	160,310,
+	97,
+	97,
+	110
+};
 
 /* Map TID to TX scheduler's FIFO. */
 static const uint8_t iwl_tid2fifo[] = {
