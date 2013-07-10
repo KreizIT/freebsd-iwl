@@ -513,6 +513,7 @@ iwl5000_attach(struct iwl_softc *sc, uint16_t pid)
 	case IWL_HW_REV_TYPE_2030:
 		sc->limits = &iwl2030_sensitivity_limits;
 		sc->fwname = "iwl2030fw";
+		sc->sc_flags |= IWL_FLAG_ADV_BTCOEX;
 		break;
 	default:
 		device_printf(sc->sc_dev, "adapter type %d not supported\n",

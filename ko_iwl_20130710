@@ -1,86 +1,60 @@
-Jul 10 18:55:05 Test kernel: FW: "2030 fw v18.168.6.1 build 0
-Jul 10 18:55:05 Test kernel: ", build 0x0
-Jul 10 18:55:05 Test kernel: using alternative 0
-Jul 10 18:55:05 Test kernel: TLV type 16 not handled
-Jul 10 18:55:05 Test kernel: TLV type 17 not handled
-Jul 10 18:55:05 Test kernel: TLV type 6 not handled
-Jul 10 18:55:05 Test kernel: TLV type 8 not handled
-Jul 10 18:55:05 Test kernel: TLV type 9 not handled
-Jul 10 18:55:05 Test kernel: TLV type 10 not handled
-Jul 10 18:55:05 Test kernel: TLV type 11 not handled
-Jul 10 18:55:05 Test kernel: TLV type 12 not handled
-Jul 10 18:55:05 Test kernel: TLV type 13 not handled
-Jul 10 18:55:05 Test kernel: interrupt reg1=8000000 reg2=1
-Jul 10 18:55:05 Test kernel: interrupt reg1=8000000 reg2=1
-Jul 10 18:55:05 Test kernel: interrupt reg1=80000001 reg2=40010000
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 0 idx 0 flags 0 type 1(UC_READY) len 36
-Jul 10 18:55:05 Test kernel: microcode alive notification version=18.168 subtype=9 alive=1
-Jul 10 18:55:05 Test kernel: iwl5000_ict_reset: enabling ICT
-Jul 10 18:55:05 Test kernel: iwl5000_send_wimax_coex: Configuring WiMAX coexistence
-Jul 10 18:55:05 Test kernel: iwl_cmd: IWL5000_CMD_WIMAX_COEX (0x5a) flags 0 qid 9 idx 0
-Jul 10 18:55:05 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 9 idx 0 flags 0 type 90(IWL5000_CMD_WIMAX_COEX) len 4
-Jul 10 18:55:05 Test kernel: sending crystal calibration 127, 127
-Jul 10 18:55:05 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 1
-Jul 10 18:55:05 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 0 idx 1 flags 0 type 98(IWL_TEMP_NOTIFICATION) len 8
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 9 idx 1 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
-Jul 10 18:55:05 Test kernel: iwl5000_query_calibration: sending calibration query
-Jul 10 18:55:05 Test kernel: iwl_cmd: IWL5000_CMD_CALIB_CONFIG (0x65) flags 0 qid 9 idx 2
-Jul 10 18:55:05 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 9 idx 2 flags 0 type 101(IWL5000_CMD_CALIB_CONFIG) len 8
-Jul 10 18:55:05 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 0 idx 2 flags 0 type 102(IWL5000_CMD_CALIB_RESULT) len 12
-Jul 10 18:55:05 Test kernel: saving calibration result code=16 len=8
-Jul 10 18:55:05 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:05 Test kernel: iwl_notif_intr: qid 0 idx 3 flags 0 type 102(IWL5000_CMD_CALIB_RESULT) len 520
-Jul 10 18:55:05 Test kernel: saving calibration result code=8 len=516
-Jul 10 18:55:05 Test kernel: interrupt reg1=10000000 reg2=0
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 0 idx 4 flags 0 type 102(IWL5000_CMD_CALIB_RESULT) len 1352
-Jul 10 18:55:06 Test kernel: saving calibration result code=9 len=1348
-Jul 10 18:55:06 Test kernel: interrupt reg1=10000000 reg2=0
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 0 idx 5 flags 0 type 102(IWL5000_CMD_CALIB_RESULT) len 92
-Jul 10 18:55:06 Test kernel: saving calibration result code=11 len=88
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 0 idx 6 flags 0 type 103(IWL5000_CMD_CALIB_COMPLETE) len 8
-Jul 10 18:55:06 Test kernel: interrupt reg1=8000000 reg2=1
-Jul 10 18:55:06 Test kernel: interrupt reg1=8000000 reg2=1
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000001 reg2=40010000
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 0 idx 0 flags 0 type 1(UC_READY) len 36
-Jul 10 18:55:06 Test kernel: microcode alive notification version=18.168 subtype=1 alive=1
-Jul 10 18:55:06 Test kernel: iwl5000_ict_reset: enabling ICT
-Jul 10 18:55:06 Test kernel: iwl5000_send_wimax_coex: Configuring WiMAX coexistence
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL5000_CMD_WIMAX_COEX (0x5a) flags 0 qid 9 idx 0
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 0 flags 0 type 90(IWL5000_CMD_WIMAX_COEX) len 4
-Jul 10 18:55:06 Test kernel: sending crystal calibration 127, 127
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 1
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 0 idx 1 flags 0 type 98(IWL_TEMP_NOTIFICATION) len 8
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 1 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
-Jul 10 18:55:06 Test kernel: send calibration result idx=0 len=516
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 2
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 2 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
-Jul 10 18:55:06 Test kernel: send calibration result idx=1 len=1348
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 3
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 3 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
-Jul 10 18:55:06 Test kernel: send calibration result idx=2 len=88
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 4
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 4 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
-Jul 10 18:55:06 Test kernel: send calibration result idx=4 len=8
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 5
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 5 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
-Jul 10 18:55:06 Test kernel: iwl_config: configuring valid TX chains 0x3
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL5000_CMD_TX_ANT_CONFIG (0x98) flags 0 qid 9 idx 6
-Jul 10 18:55:06 Test kernel: interrupt reg1=80000000 reg2=0
-Jul 10 18:55:06 Test kernel: iwl_notif_intr: qid 9 idx 6 flags 0 type 152(IWL5000_CMD_TX_ANT_CONFIG) len 4
-Jul 10 18:55:06 Test kernel: iwl_send_btcoex: configuring bluetooth coexistence
-Jul 10 18:55:06 Test kernel: iwl_cmd: IWL_CMD_BT_COEX (0x9b) flags 0 qid 9 idx 7
-Jul 10 18:55:06 Test kernel: interrupt reg1=10000000 reg2=0
-Jul 10 18:55:07 Test kernel: iwl0: iwl_config: could not configure bluetooth coexistence, error 35
-Jul 10 18:55:07 Test kernel: iwl0: iwl_init_locked: could not configure device, error 35
+Jul 10 19:11:11 Test kernel: FW: "2030 fw v18.168.6.1 build 0
+Jul 10 19:11:11 Test kernel: ", build 0x0
+Jul 10 19:11:11 Test kernel: using alternative 0
+Jul 10 19:11:11 Test kernel: TLV type 16 not handled
+Jul 10 19:11:11 Test kernel: TLV type 17 not handled
+Jul 10 19:11:11 Test kernel: TLV type 6 not handled
+Jul 10 19:11:11 Test kernel: TLV type 8 not handled
+Jul 10 19:11:11 Test kernel: TLV type 9 not handled
+Jul 10 19:11:11 Test kernel: TLV type 10 not handled
+Jul 10 19:11:11 Test kernel: TLV type 11 not handled
+Jul 10 19:11:11 Test kernel: TLV type 12 not handled
+Jul 10 19:11:11 Test kernel: TLV type 13 not handled
+Jul 10 19:11:11 Test kernel: interrupt reg1=8000000 reg2=1
+Jul 10 19:11:11 Test kernel: interrupt reg1=8000000 reg2=1
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000001 reg2=40010000
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 0 idx 0 flags 0 type 1(UC_READY) len 36
+Jul 10 19:11:11 Test kernel: microcode alive notification version=18.168 subtype=1 alive=1
+Jul 10 19:11:11 Test kernel: iwl5000_ict_reset: enabling ICT
+Jul 10 19:11:11 Test kernel: iwl5000_send_wimax_coex: Configuring WiMAX coexistence
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL5000_CMD_WIMAX_COEX (0x5a) flags 0 qid 9 idx 0
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 0 flags 0 type 90(IWL5000_CMD_WIMAX_COEX) len 4
+Jul 10 19:11:11 Test kernel: sending crystal calibration 127, 127
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 1
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 0 idx 1 flags 0 type 98(IWL_TEMP_NOTIFICATION) len 8
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 1 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
+Jul 10 19:11:11 Test kernel: send calibration result idx=0 len=516
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 2
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 2 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
+Jul 10 19:11:11 Test kernel: send calibration result idx=1 len=1348
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 3
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 3 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
+Jul 10 19:11:11 Test kernel: send calibration result idx=2 len=88
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 4
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 4 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
+Jul 10 19:11:11 Test kernel: send calibration result idx=4 len=8
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_PHY_CALIB (0xb0) flags 0 qid 9 idx 5
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 5 flags 0 type 176(IWL_CMD_PHY_CALIB) len 4
+Jul 10 19:11:11 Test kernel: iwl_config: configuring valid TX chains 0x3
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL5000_CMD_TX_ANT_CONFIG (0x98) flags 0 qid 9 idx 6
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 6 flags 0 type 152(IWL5000_CMD_TX_ANT_CONFIG) len 4
+Jul 10 19:11:11 Test kernel: iwl_send_advanced_btcoex: configuring advanced bluetooth coexistence
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_BT_COEX (0x9b) flags 0 qid 9 idx 7
+Jul 10 19:11:11 Test kernel: iwl_cmd: UNKNOWN INTR NOTIF/CMD (0xcc) flags 0 qid 9 idx 8
+Jul 10 19:11:11 Test kernel: iwl_cmd: UNKNOWN INTR NOTIF/CMD (0xcd) flags 0 qid 9 idx 9
+Jul 10 19:11:11 Test kernel: iwl_cmd: UNKNOWN INTR NOTIF/CMD (0xcd) flags 0 qid 9 idx 10
+Jul 10 19:11:11 Test kernel: iwl_config: setting configuration
+Jul 10 19:11:11 Test kernel: iwl_cmd: IWL_CMD_RXON (0x10) flags 0 qid 9 idx 11
+Jul 10 19:11:11 Test kernel: interrupt reg1=80000000 reg2=0
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 9 idx 7 flags 0 type 155(IWL_CMD_BT_COEX) len 4
+Jul 10 19:11:11 Test kernel: iwl_notif_intr: qid 3 idx 2 flags 7 type 6(UNKNOWN INTR NOTIF/CMD) len 4
+Jul 10 19:11:11 Test kernel: interrupt reg1=10000000 reg2=0
+Jul 10 19:11:12 Test kernel: iwl0: iwl_config: RXON command failed
+Jul 10 19:11:12 Test kernel: iwl0: iwl_init_locked: could not configure device, error 35
