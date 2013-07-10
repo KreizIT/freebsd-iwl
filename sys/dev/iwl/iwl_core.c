@@ -5350,6 +5350,10 @@ iwl5000_nic_config(struct iwl_softc *sc)
 	}
 	if (sc->hw_type == IWL_HW_REV_TYPE_6005)
 		IWL_SETBITS(sc, IWL_GP_DRIVER, IWL_GP_DRIVER_6050_1X2);
+
+	/* Hard coding for testing 2230 NIC purpose */
+	IWL_SETBITS(sc, IWL_GP_DRIVER, IWL_GP_DRIVER_REG_BIT_RADIO_IQ_INVERT);
+
 	return 0;
 }
 

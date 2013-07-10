@@ -184,6 +184,7 @@
 #define IWL_GP_DRIVER_RADIO_2X2_IPA	(2 << 0)
 #define IWL_GP_DRIVER_CALIB_VER6	(1 << 2)
 #define IWL_GP_DRIVER_6050_1X2		(1 << 3)
+#define IWL_GP_DRIVER_REG_BIT_RADIO_IQ_INVERT 	(0x00000080)
 
 /* Possible flags/values for register IWL_LED. */
 #define IWL_LED_BSM_CTRL		(1 << 5)

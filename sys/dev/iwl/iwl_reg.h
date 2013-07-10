@@ -1274,7 +1274,7 @@ static const struct iwl_sensitivity_limits iwl6000_sensitivity_limits = {
 	 97,
 	100
 };
-/* Get value from linux kernel 3.2.+ */
+/* Get value from linux kernel 3.2.+ in Drivers/net/wireless/iwlwifi/iwl-2000.c*/
 static const struct iwl_sensitivity_limits iwl2030_sensitivity_limits = {
     105,110,
     128,232,
