@@ -603,6 +603,17 @@ struct iwl5000_phy_calib_crystal {
 	uint8_t	reserved[2];
 } __packed;
 
+struct iwl5000_phy_calib_temp_offsetv2 {
+	uint8_t		code;
+	uint8_t		group;
+	uint8_t		ngroups;
+	uint8_t		isvalid;
+	int16_t 	offset_high;
+	int16_t		offset_low;
+	int16_t		burntVoltageRef;
+	int16_t		reserved;
+} __packed;
+
 struct iwl5000_phy_calib_temp_offset {
 	uint8_t		code;
 	uint8_t		group;

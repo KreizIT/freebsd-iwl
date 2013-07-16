@@ -22,6 +22,13 @@
 /*
  * Driver for Intel WiFi Link 6000 Series 802.11 network adapters.
  */
+ 
+
+
+
+#define IWL_DEBUG_START /* Activate immedialty debug (for printing during attach, probe etc.. */
+#define IWL_DEBUG_START_LEVEL (0xffffffff & ~IWL_DEBUG_TRACE) /* At which we start debug. After, we have sysctl for adjustement */
+
 
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD$");
@@ -148,6 +155,7 @@ static int	iwl5000_send_calibration(struct iwl_softc *);
 static int	iwl5000_send_wimax_coex(struct iwl_softc *);
 static int	iwl5000_crystal_calib(struct iwl_softc *);
 static int	iwl5000_temp_offset_calib(struct iwl_softc *);
+static int	iwl5000_temp_offset_calibv2(struct iwl_softc *sc);
 static int	iwl5000_post_alive(struct iwl_softc *);
 static int	iwl5000_load_firmware_section(struct iwl_softc *, uint32_t,
 		    const uint8_t *, int);
@@ -172,6 +180,9 @@ static void	iwl_stop_locked(struct iwl_softc *);
 static void	iwl_stop(struct iwl_softc *);
 static void	iwl_set_channel(struct ieee80211com *);
 static void	iwl_hw_reset(void *, int);
+static char *iwl_get_csr_string(int csr);
+static void iwl_debug_register(struct iwl_softc *sc);
+
 
 #ifdef IWL_DEBUG
 
@@ -215,6 +226,19 @@ iwl_intr_str(uint8_t cmd)
 	case IWL_CMD_SET_CRITICAL_TEMP:	return "IWL_CMD_SET_CRITICAL_TEMP";
 	case IWL_CMD_SET_SENSITIVITY:	return "IWL_CMD_SET_SENSITIVITY";
 	case IWL_CMD_PHY_CALIB:		return "IWL_CMD_PHY_CALIB";
+	case IWL_CMD_BT_COEX_PRIOTABLE: return "IWL_CMD_BT_COEX_PRIOTABLE";
+	case IWL_CMD_BT_COEX_PROT:	return "IWL_CMD_BT_COEX_PROT";
+	/* PAN commands */
+	case  IWL_CMD_WIPAN_PARAMS:	return "IWL_CMD_WIPAN_PARAMS";		
+	case  IWL_CMD_WIPAN_RXON:	return "IWL_CMD_WIPAN_RXON";		
+	case  IWL_CMD_WIPAN_RXON_TIMING:	return "IWL_CMD_WIPAN_RXON_TIMING";	
+	case  IWL_CMD_WIPAN_RXON_ASSOC:	return "IWL_CMD_WIPAN_RXON_ASSOC";	
+	case  IWL_CMD_WIPAN_QOS_PARAM:	return "IWL_CMD_WIPAN_QOS_PARAM";
+	case  IWL_CMD_WIPAN_WEPKEY:	return "IWL_CMD_WIPAN_WEPKEY";	
+	case  IWL_CMD_WIPAN_P2P_CHANNEL_SWITCH:	return "IWL_CMD_WIPAN_P2P_CHANNEL_SWITCH";
+	case  IWL_CMD_WIPAN_NOA_NOTIFICATION:	return "IWL_CMD_WIPAN_NOA_NOTIFICATION";	
+	case  IWL_CMD_WIPAN_DEACTIVATION_COMPLETE:	return "IWL_CMD_WIPAN_DEACTIVATION_COMPLETE";
+
 	}
 	return "UNKNOWN INTR NOTIF/CMD";
 }
@@ -234,6 +258,13 @@ iwl_attach(device_t dev)
 	sc->current_pwrsave_level = -1;  /* signifies uninitialized */
 
 	sc->sc_dev = dev;
+#ifdef IWL_DEBUG_START
+	device_printf(dev, "Enabling early debug\n");
+	#ifdef IWL_DEBUG_START_LEVEL
+		sc->sc_debug=IWL_DEBUG_START_LEVEL;
+		DPRINTF(sc, IWL_DEBUG_TRACE, "Early debug defined at 0x%08x level\n",IWL_DEBUG_START_LEVEL);
+	#endif
+#endif
 
 	IWL_LOCK_INIT(sc);
 
@@ -546,7 +577,15 @@ iwl_sysctlattach(struct iwl_softc *sc)
 	struct sysctl_oid *tree = device_get_sysctl_tree(sc->sc_dev);
 
 #ifdef IWL_DEBUG
-	sc->sc_debug = 0;
+	#ifdef IWL_DEBUG_START
+		#ifdef IWL_DEBUG_START_LEVEL
+			sc->sc_debug = IWL_DEBUG_START_LEVEL;
+		#else
+			sc->sc_debug = 0;
+		#endif
+	#else
+		sc->sc_debug = 0;
+	#endif
 	SYSCTL_ADD_INT(ctx, SYSCTL_CHILDREN(tree), OID_AUTO,
 	    "debug", CTLFLAG_RW, &sc->sc_debug, 0, "control debugging printfs");
 #endif
@@ -1353,6 +1392,14 @@ iwl5000_read_eeprom(struct iwl_softc *sc)
 	    hdr.version, hdr.pa_type, le16toh(hdr.volt));
 	sc->calib_ver = hdr.version;
 
+	sc->eeprom_voltage = le16toh(hdr.volt);
+	iwl_read_prom_data(sc, base + IWL5000_EEPROM_TEMP, &val, 2);
+	sc->eeprom_temp_high=le16toh(val);
+	iwl_read_prom_data(sc, base + IWL5000_EEPROM_VOLT, &val, 2);
+	sc->eeprom_temp = le16toh(val);
+
+	
+	
 	if (sc->hw_type == IWL_HW_REV_TYPE_5150) {
 		/* Compute temperature offset. */
 		iwl_read_prom_data(sc, base + IWL5000_EEPROM_TEMP, &val, 2);
@@ -2833,6 +2880,8 @@ iwl_fatal_intr(struct iwl_softc *sc)
 	/* Force a complete recalibration on next init. */
 	sc->sc_flags &= ~IWL_FLAG_CALIB_DONE;
 
+	iwl_debug_register(sc);
+	
 	/* Check that the error log address is valid. */
 	if (sc->errptr < IWL_FW_DATA_BASE ||
 	    sc->errptr + sizeof (dump) >
@@ -2913,7 +2962,7 @@ iwl_intr(void *arg)
 		r2 = IWL_READ(sc, IWL_FH_INT);
 	}
 
-	DPRINTF(sc, IWL_DEBUG_INTR, "interrupt reg1=%x reg2=%x\n", r1, r2);
+	DPRINTF(sc, IWL_DEBUG_INTR, "interrupt reg1=0x%08x reg2=0x%08x\n", r1, r2);
 
 	if (r1 == 0 && r2 == 0)
 		goto done;	/* Interrupt not for us. */
@@ -3933,7 +3982,17 @@ iwl_config(struct iwl_softc *sc)
 			    "%s: could not set temperature offset\n", __func__);
 			return error;
 		}
+	} else {
+		/* Set radio temperature sensor offset. */
+		error = iwl5000_temp_offset_calibv2(sc);
+		if (error != 0) {
+		printf("could not set temperature offset\n");
+			device_printf(sc->sc_dev,
+			    "%s: could not set temperature offset\n", __func__);
+			return error;
+		}
 	}
+	
 
 	/* Configure valid TX chains for >=5000 Series. */
 	if (sc->hw_type != IWL_HW_REV_TYPE_4965) {
@@ -4818,6 +4877,34 @@ iwl5000_temp_offset_calib(struct iwl_softc *sc)
 	    le16toh(cmd.offset));
 	return iwl_cmd(sc, IWL_CMD_PHY_CALIB, &cmd, sizeof cmd, 0);
 }
+
+static int
+iwl5000_temp_offset_calibv2(struct iwl_softc *sc)
+{
+	struct iwl5000_phy_calib_temp_offsetv2 cmd;
+
+	memset(&cmd, 0, sizeof cmd);
+	cmd.code = IWL5000_PHY_CALIB_TEMP_OFFSET;
+	cmd.ngroups = 1;
+	cmd.isvalid = 1;
+	if (sc->eeprom_temp != 0) {
+		cmd.offset_low = htole16(sc->eeprom_temp);
+		cmd.offset_high = htole16(sc->eeprom_temp_high);
+	} else {
+		cmd.offset_low = htole16(IWL_DEFAULT_TEMP_OFFSET);
+		cmd.offset_high = htole16(IWL_DEFAULT_TEMP_OFFSET);
+	}
+	cmd.burntVoltageRef = htole16(sc->eeprom_voltage);
+	
+	DPRINTF(sc, IWL_DEBUG_CALIBRATE, "setting radio sensor low offset to %d, high offset to %d, voltage to %d\n",
+	    le16toh(cmd.offset_low),
+		le16toh(cmd.offset_high),
+		le16toh(cmd.burntVoltageRef));
+	
+	return iwl_cmd(sc, IWL_CMD_PHY_CALIB, &cmd, sizeof cmd, 0);
+	
+}
+
 
 /*
  * This function is called after the initialization or runtime firmware
@@ -5770,4 +5857,74 @@ iwl_set_pan_params(struct iwl_softc *sc)
 	}
 
 	return 0;
+}
+static char *iwl_get_csr_string(int csr)
+{
+	switch (csr) {
+		IWL_DESC(IWL_HW_IF_CONFIG);	
+		IWL_DESC(IWL_INT_COALESCING);	
+		IWL_DESC(IWL_INT);
+		IWL_DESC(IWL_INT_MASK);
+		IWL_DESC(IWL_FH_INT);
+		IWL_DESC(IWL_GPIO_IN);
+		IWL_DESC(IWL_RESET);
+		IWL_DESC(IWL_GP_CNTRL);
+		IWL_DESC(IWL_HW_REV);	
+		IWL_DESC(IWL_EEPROM	);	
+		IWL_DESC(IWL_EEPROM_GP);
+		IWL_DESC(IWL_OTP_GP);	
+		IWL_DESC(IWL_GIO);
+		IWL_DESC(IWL_GP_UCODE_REG);
+		IWL_DESC(IWL_GP_DRIVER);		
+		IWL_DESC(IWL_UCODE_GP1	);	
+		IWL_DESC(IWL_UCODE_GP2);   
+		IWL_DESC(IWL_LED);
+		IWL_DESC(IWL_DRAM_INT_TBL);
+		IWL_DESC(IWL_GIO_CHICKEN);	
+		IWL_DESC(IWL_ANA_PLL);	
+		IWL_DESC(IWL_HW_REV_WA);
+		IWL_DESC(IWL_DBG_HPET_MEM);
+	default:
+		return "UNKNOWN CSR";
+	}
+}
+
+static void
+iwl_debug_register(struct iwl_softc *sc)
+{
+	int i;
+	static const uint32_t csr_tbl[] = {
+		IWL_HW_IF_CONFIG,	
+		IWL_INT_COALESCING,	
+		IWL_INT,
+		IWL_INT_MASK,
+		IWL_FH_INT,
+		IWL_GPIO_IN,
+		IWL_RESET,		
+		IWL_GP_CNTRL,		
+		IWL_HW_REV,		
+		IWL_EEPROM	,	
+		IWL_EEPROM_GP,		
+		IWL_OTP_GP,		
+		IWL_GIO,
+		IWL_GP_UCODE_REG, 
+		IWL_GP_DRIVER,		
+		IWL_UCODE_GP1,	
+		IWL_UCODE_GP2,   
+		IWL_LED,			
+		IWL_DRAM_INT_TBL,
+		IWL_GIO_CHICKEN,		
+		IWL_ANA_PLL,	
+		IWL_HW_REV_WA,	
+		IWL_DBG_HPET_MEM,
+	};
+	DPRINTF(sc, IWL_DEBUG_REGISTER, "CSR values: (2nd byte of IWL_INT_COALESCING is IWL_INT_PERIODIC)%s","\n");
+	for (i = 0; i <  COUNTOF(csr_tbl); i++) {
+		DPRINTF(sc, IWL_DEBUG_REGISTER,"  %10s: 0x%08x ",
+			iwl_get_csr_string(csr_tbl[i]),
+			IWL_READ(sc, csr_tbl[i]));
+		if (!((i+1)%3))
+			DPRINTF(sc, IWL_DEBUG_REGISTER,"%s","\n");
+	}
+	DPRINTF(sc, IWL_DEBUG_REGISTER,"%s","\n");
 }
