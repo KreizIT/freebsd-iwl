@@ -3915,27 +3915,49 @@ iwl_send_advanced_btcoex(struct iwl_softc *sc)
 		0xc0004000, 0x00004000, 0xf0005000, 0xf0005000,
 	};
 	struct iwl6000_btcoex_config btconfig;
+	struct iwn2000_btcoex_config btconfig2k;
 	struct iwl_btcoex_priotable btprio;
 	struct iwl_btcoex_prot btprot;
 	int error, i;
 
 	memset(&btconfig, 0, sizeof btconfig);
-	btconfig.flags = 145;
-	btconfig.max_kill = 5;
-	btconfig.bt3_t7_timer = 1;
-	btconfig.kill_ack = htole32(0xffff0000);
-	btconfig.kill_cts = htole32(0xffff0000);
-	btconfig.sample_time = 2;
-	btconfig.bt3_t2_timer = 0xc;
-	for (i = 0; i < 12; i++)
-		btconfig.lookup_table[i] = htole32(btcoex_3wire[i]);
-	btconfig.valid = htole16(0xff);
-	btconfig.prio_boost = 0xf0;
-	DPRINTF(sc, IWL_DEBUG_RESET,
-	    "%s: configuring advanced bluetooth coexistence\n", __func__);
-	error = iwl_cmd(sc, IWL_CMD_BT_COEX, &btconfig, sizeof(btconfig), 1);
-	if (error != 0)
-		return error;
+	memset(&btconfig2k, 0, sizeof btconfig2k);
+	
+	if (sc->hw_type == IWL_HW_REV_TYPE_2030) {
+		btconfig2k.flags = 145;
+		btconfig2k.max_kill = 5;
+		btconfig2k.bt3_t7_timer = 1;
+		btconfig2k.kill_ack = htole32(0xffff0000);
+		btconfig2k.kill_cts = htole32(0xffff0000);
+		btconfig2k.sample_time = 2;
+		btconfig2k.bt3_t2_timer = 0xc;
+		for (i = 0; i < 12; i++)
+			btconfig2k.lookup_table[i] = htole32(btcoex_3wire[i]);
+		btconfig2k.valid = htole16(0xff);
+		btconfig2k.prio_boost = 0xf0;
+		DPRINTF(sc, IWL_DEBUG_RESET,
+			"%s: configuring advanced bluetooth coexistence\n", __func__);
+		error = iwl_cmd(sc, IWL_CMD_BT_COEX, &btconfig2k, sizeof(btconfig2k), 1);
+		if (error != 0)
+			return error;
+	} else {
+		btconfig.flags = 145;
+		btconfig.max_kill = 5;
+		btconfig.bt3_t7_timer = 1;
+		btconfig.kill_ack = htole32(0xffff0000);
+		btconfig.kill_cts = htole32(0xffff0000);
+		btconfig.sample_time = 2;
+		btconfig.bt3_t2_timer = 0xc;
+		for (i = 0; i < 12; i++)
+			btconfig.lookup_table[i] = htole32(btcoex_3wire[i]);
+		btconfig.valid = htole16(0xff);
+		btconfig.prio_boost = 0xf0;
+		DPRINTF(sc, IWL_DEBUG_RESET,
+			"%s: configuring advanced bluetooth coexistence\n", __func__);
+		error = iwl_cmd(sc, IWL_CMD_BT_COEX, &btconfig, sizeof(btconfig), 1);
+		if (error != 0)
+			return error;
+	}
 
 	memset(&btprio, 0, sizeof btprio);
 	btprio.calib_init1 = 0x6;
@@ -3993,7 +4015,18 @@ iwl_config(struct iwl_softc *sc)
 		}
 	}
 	
-
+	/* Configure bluetooth coexistence. */
+	if (sc->sc_flags & IWL_FLAG_ADV_BTCOEX)
+		error = iwl_send_advanced_btcoex(sc);
+	else
+		error = iwl_send_btcoex(sc);
+	if (error != 0) {
+		device_printf(sc->sc_dev,
+		    "%s: could not configure bluetooth coexistence, error %d\n",
+		    __func__, error);
+		return error;
+	}
+	
 	/* Configure valid TX chains for >=5000 Series. */
 	if (sc->hw_type != IWL_HW_REV_TYPE_4965) {
 		txmask = htole32(sc->txchainmask);
@@ -4009,17 +4042,7 @@ iwl_config(struct iwl_softc *sc)
 		}
 	}
 
-	/* Configure bluetooth coexistence. */
-	if (sc->sc_flags & IWL_FLAG_ADV_BTCOEX)
-		error = iwl_send_advanced_btcoex(sc);
-	else
-		error = iwl_send_btcoex(sc);
-	if (error != 0) {
-		device_printf(sc->sc_dev,
-		    "%s: could not configure bluetooth coexistence, error %d\n",
-		    __func__, error);
-		return error;
-	}
+
 
 	sc->rxon = &sc->rx_on[IWL_RXON_BSS_CTX];
 	/* Set mode, channel, RX filter and enable RX. */

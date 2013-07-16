@@ -494,6 +494,27 @@ struct iwl6000_btcoex_config {
 	uint8_t		tx_prio_boost;
 	uint16_t	rx_prio_boost;
 } __packed;
+/* Structures for enhanced command IWN_CMD_BLUETOOTH for 2000 Series. */
+struct iwn2000_btcoex_config {
+	uint8_t		flags; // Cf Flags in iwn6000_btcoex_config
+	uint8_t		lead_time;
+	uint8_t		max_kill;
+	uint8_t		bt3_t7_timer;
+	uint32_t	kill_ack;
+	uint32_t	kill_cts;
+	uint8_t		sample_time;
+	uint8_t		bt3_t2_timer;
+	uint16_t	bt4_reaction;
+	uint32_t	lookup_table[12];
+	uint16_t	bt4_decision;
+	uint16_t	valid;
+	
+	uint32_t	prio_boost; // size change prior to iwn6000_btcoex_config
+	uint8_t		reserved; // added prior to iwn6000_btcoex_config
+	
+	uint8_t		tx_prio_boost;
+	uint16_t	rx_prio_boost;
+} __packed;
 
 struct iwl_btcoex_priotable {
 	uint8_t		calib_init1;
