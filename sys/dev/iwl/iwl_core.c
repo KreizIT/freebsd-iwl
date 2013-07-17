@@ -1,4 +1,5 @@
 /*-
+ * Copyright (c) 2013 Cedric GROSS <c.gross@kreiz-it.fr>
  * Copyright (c) 2011 Intel Corporation
  * Copyright (c) 2007-2009
  *	Damien Bergamini <damien.bergamini@free.fr>
@@ -25,10 +26,10 @@
  
 
 
-
-#define IWL_DEBUG_START /* Activate immedialty debug (for printing during attach, probe etc.. */
-#define IWL_DEBUG_START_LEVEL (0xffffffff & ~IWL_DEBUG_TRACE) /* At which we start debug. After, we have sysctl for adjustement */
-
+/* Uncomment below to activate debug when driver start
+ #define IWL_DEBUG_START // Activate immedialty debug (for printing during attach, probe etc.. 
+ #define IWL_DEBUG_START_LEVEL (0xffffffff & ~IWL_DEBUG_TRACE)  At which level we start debug. After, we have sysctl for adjustement 
+*/
 
 #include <sys/cdefs.h>
 __FBSDID("$FreeBSD$");
@@ -1392,11 +1393,15 @@ iwl5000_read_eeprom(struct iwl_softc *sc)
 	    hdr.version, hdr.pa_type, le16toh(hdr.volt));
 	sc->calib_ver = hdr.version;
 
-	sc->eeprom_voltage = le16toh(hdr.volt);
-	iwl_read_prom_data(sc, base + IWL5000_EEPROM_TEMP, &val, 2);
-	sc->eeprom_temp_high=le16toh(val);
-	iwl_read_prom_data(sc, base + IWL5000_EEPROM_VOLT, &val, 2);
-	sc->eeprom_temp = le16toh(val);
+	
+	/* Needed value for calculating temperature offset v2*/
+	if (sc->hw_type == IWL_HW_REV_TYPE_2030) {
+		sc->eeprom_voltage = le16toh(hdr.volt);
+		iwl_read_prom_data(sc, base + IWL5000_EEPROM_TEMP, &val, 2);
+		sc->eeprom_temp_high=le16toh(val);
+		iwl_read_prom_data(sc, base + IWL5000_EEPROM_VOLT, &val, 2);
+		sc->eeprom_temp = le16toh(val);
+	}
 
 	
 	
@@ -4004,7 +4009,7 @@ iwl_config(struct iwl_softc *sc)
 			    "%s: could not set temperature offset\n", __func__);
 			return error;
 		}
-	} else {
+	} else if (sc->hw_type == IWL_HW_REV_TYPE_2030) {
 		/* Set radio temperature sensor offset. */
 		error = iwl5000_temp_offset_calibv2(sc);
 		if (error != 0) {
