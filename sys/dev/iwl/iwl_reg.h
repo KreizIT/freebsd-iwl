@@ -494,6 +494,27 @@ struct iwl6000_btcoex_config {
 	uint8_t		tx_prio_boost;
 	uint16_t	rx_prio_boost;
 } __packed;
+/* Structures for enhanced command IWN_CMD_BLUETOOTH for 2000 Series. */
+struct iwn2000_btcoex_config {
+	uint8_t		flags; // Cf Flags in iwn6000_btcoex_config
+	uint8_t		lead_time;
+	uint8_t		max_kill;
+	uint8_t		bt3_t7_timer;
+	uint32_t	kill_ack;
+	uint32_t	kill_cts;
+	uint8_t		sample_time;
+	uint8_t		bt3_t2_timer;
+	uint16_t	bt4_reaction;
+	uint32_t	lookup_table[12];
+	uint16_t	bt4_decision;
+	uint16_t	valid;
+	
+	uint32_t	prio_boost; // size change prior to iwn6000_btcoex_config
+	uint8_t		reserved; // added prior to iwn6000_btcoex_config
+	
+	uint8_t		tx_prio_boost;
+	uint16_t	rx_prio_boost;
+} __packed;
 
 struct iwl_btcoex_priotable {
 	uint8_t		calib_init1;
@@ -601,6 +622,17 @@ struct iwl5000_phy_calib_crystal {
 
 	uint8_t	cap_pin[2];
 	uint8_t	reserved[2];
+} __packed;
+
+struct iwl5000_phy_calib_temp_offsetv2 {
+	uint8_t		code;
+	uint8_t		group;
+	uint8_t		ngroups;
+	uint8_t		isvalid;
+	int16_t 	offset_high;
+	int16_t		offset_low;
+	int16_t		burntVoltageRef;
+	int16_t		reserved;
 } __packed;
 
 struct iwl5000_phy_calib_temp_offset {
@@ -1273,6 +1305,18 @@ static const struct iwl_sensitivity_limits iwl6000_sensitivity_limits = {
 	 97,
 	 97,
 	100
+};
+/* Get value from linux kernel 3.2.+ in Drivers/net/wireless/iwlwifi/iwl-2000.c*/
+static const struct iwl_sensitivity_limits iwl2030_sensitivity_limits = {
+    105,110,
+    128,232,
+	80,145,
+	128,232,
+	125,175,
+	160,310,
+	97,
+	97,
+	110
 };
 
 /* Map TID to TX scheduler's FIFO. */

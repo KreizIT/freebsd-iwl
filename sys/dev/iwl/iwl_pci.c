@@ -40,6 +40,8 @@ struct iwl_ident {
 static const struct iwl_ident iwl_ident_table[]	= {
 	{ 0x8086, 0x0082, "Intel(R) Centrino(R) Advanced-N 6205"},
 	{ 0x8086, 0x0085, "Intel(R) Centrino(R) Advanced-N 6205"},
+	{ 0x8086, 0x0887, "Intel Centrino Wireless-N 2230"},
+    { 0x8086, 0x0888, "Intel Centrino Wireless-N 2230"},
 	{ 0x8086, 0x0891, "Intel(R) Centrino(R) Wireless-N 2200"},
 	{ 0x8086, 0x08AE, "Intel(R) Centrino(R) Wireless-N 100"},
 	{ 0x8086, 0x08AF, "Intel(R) Centrino(R) Wireless-N 100"},

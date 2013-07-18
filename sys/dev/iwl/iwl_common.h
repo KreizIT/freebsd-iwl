@@ -93,6 +93,8 @@ enum {
 	IWL_DEBUG_NODE		= 0x00000400,	/* node management */
 	IWL_DEBUG_LED		= 0x00000800,	/* led management */
 	IWL_DEBUG_CMD		= 0x00001000,	/* cmd submission */
+	IWL_DEBUG_REGISTER	= 0x00002000,	/* print chipset register */
+	IWL_DEBUG_TRACE		= 0x00004000,	/* Print begin and start driver function */
 	IWL_DEBUG_FATAL		= 0x80000000,	/* fatal errors */
 	IWL_DEBUG_ANY		= 0xffffffff
 };

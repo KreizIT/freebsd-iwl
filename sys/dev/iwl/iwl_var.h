@@ -387,6 +387,7 @@ struct iwl_softc {
 	char			eeprom_domain[4];
 	uint32_t		eeprom_crystal;
 	int16_t			eeprom_temp;
+	int16_t			eeprom_temp_high;
 	int16_t			eeprom_voltage;
 	int8_t			maxpwr2GHz;
 	int8_t			maxpwr5GHz;
@@ -472,5 +473,7 @@ struct iwl_softc {
  * the DTIM.
  */
 #define IWL_DTIM_INDICATES_UNICAST_PENDING_AT_AP
+#define IWL_DESC(x) case x: return #x
+#define COUNTOF( array ) ( sizeof( array )/sizeof( array[0] ) )
 
 #endif /* __iwl_var_h__ */
