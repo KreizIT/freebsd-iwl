@@ -3980,7 +3980,7 @@ iwl_send_advanced_btcoex(struct iwl_softc *sc)
 		return error;
 
 	/* Force BT state machine change. */
-	memset(&btprot, 0, sizeof btprio);
+	memset(&btprot, 0, sizeof btprot);
 	btprot.open = 1;
 	btprot.type = 1;
 	error = iwl_cmd(sc, IWL_CMD_BT_COEX_PROT, &btprot, sizeof(btprot), 1);
